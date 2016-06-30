@@ -1,5 +1,3 @@
-#CC=i386-pc-linux-gcc
-CC=gcc
 AR=ar
 
 UNAME := $(shell uname)
@@ -15,6 +13,10 @@ EXEC=libusbhxcfe.a
 # For shared libraries:
 # EXEC=libusbhxcfe.so
 # CFLAGS += -fPIC (in per-platform overrides)
+
+ifeq ($(UNAME), Linux)
+CC=gcc
+endif
 
 ifeq ($(UNAME), Darwin)
 CFLAGS += -arch i386 -mmacosx-version-min=10.5
