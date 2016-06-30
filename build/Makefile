@@ -10,15 +10,14 @@ INCLUDES = -I$(BASEDIR)/ -I ../../libhxcfe/sources -I ../sources/win32 -I ../../
 CFLAGS=-O3 $(INCLUDES)
 LDFLAGS= -g -shared -lc -lm  -ldl
 
-EXEC=libusbhxcfe.so
-
-ifeq ($(UNAME), Linux)
 EXEC=libusbhxcfe.a
-endif
+
+# For shared libraries:
+# EXEC=libusbhxcfe.so
+# CFLAGS += -fPIC (in per-platform overrides)
 
 ifeq ($(UNAME), Darwin)
 CFLAGS += -arch i386 -mmacosx-version-min=10.5
-EXEC=libusbhxcfe.a
 endif
 
 ifeq ($(findstring CYGWIN,$(shell uname)),CYGWIN)
