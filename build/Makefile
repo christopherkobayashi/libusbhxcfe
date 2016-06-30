@@ -5,7 +5,7 @@ AR=ar
 UNAME := $(shell uname)
 
 BASEDIR=../sources
-INCLUDES = -I$(BASEDIR)/ -I ../../../libhxcfe/trunk/sources -I ../sources/win32 -I ../../../libhxcadaptor/trunk/sources
+INCLUDES = -I$(BASEDIR)/ -I ../../libhxcfe/sources -I ../sources/win32 -I ../../libhxcadaptor/sources
 
 CFLAGS=-O3 $(INCLUDES)
 LDFLAGS= -g -shared -lc -lm  -ldl
@@ -18,8 +18,7 @@ endif
 
 ifeq ($(UNAME), Darwin)
 CFLAGS += -arch i386 -mmacosx-version-min=10.5
-LDFLAGS += -arch i386 -dynamiclib -current_version 2.0 -install_name @executable_path/../Frameworks/libusbhxcfe.dylib -mmacosx-version-min=10.5
-EXEC=libusbhxcfe.dylib
+EXEC=libusbhxcfe.a
 endif
 
 ifeq ($(findstring CYGWIN,$(shell uname)),CYGWIN)
@@ -30,19 +29,23 @@ all: $(EXEC)
 
 libusbhxcfe.dll: usb_hxcfloppyemulator.o variablebitrate.o ftdi.o
 	$(AR) r $@    $^ 
-	cp $@ ../../../build
+	mkdir -p ../../build
+	cp $@ ../../build/
 
 libusbhxcfe.dylib: usb_hxcfloppyemulator.o variablebitrate.o ftdi.o
 	$(AR) r $@    $^ 
-	cp $@ ../../../build
+	mkdir -p ../../build
+	cp $@ ../../build/
 
 libusbhxcfe.a: usb_hxcfloppyemulator.o variablebitrate.o ftdi.o
 	$(AR) r $@    $^ 
-	cp $@ ../../../build
+	mkdir -p ../../build
+	cp $@ ../../build/
 
 libusbhxcfe.so: usb_hxcfloppyemulator.o variablebitrate.o ftdi.o
 	$(CC) -o $@    $^ $(LDFLAGS)
-	cp $@ ../../../build
+	mkdir -p ../../build
+	cp $@ ../../build/
 
 usb_hxcfloppyemulator.o: $(BASEDIR)/usb_hxcfloppyemulator.c
 	$(CC) -o $@ -c $< $(CFLAGS)
