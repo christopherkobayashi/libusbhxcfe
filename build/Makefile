@@ -13,12 +13,11 @@ LDFLAGS= -g -shared -lc -lm  -ldl
 EXEC=libusbhxcfe.so
 
 ifeq ($(UNAME), Linux)
-CFLAGS += -fPIC
+EXEC=libusbhxcfe.a
 endif
 
 ifeq ($(UNAME), Darwin)
 CFLAGS += -arch i386 -mmacosx-version-min=10.5
-EXEC=libusbhxcfe.a
 endif
 
 ifeq ($(findstring CYGWIN,$(shell uname)),CYGWIN)
